@@ -1,0 +1,58 @@
+@charset "utf-8";
+
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+header {
+    color: white;
+    background-color: #717BE3;
+    font-size: 1.5em;
+}
+
+header > p {
+    background-color: #8D71E3;
+    font-family: "Bebas Neue", sans-serif;
+}
+
+nav a {
+    text-decoration: none;
+    font-family: "Bebas Neue", sans-serif;
+    color: white;
+}
+
+.ativo {
+    background-color: #8D71E3;
+    border-top: 2px dashed white;
+    border-right: 2px dashed white;
+    border-left: 2px dashed white;
+}
+
+#offcanva h5 {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1em;
+}
+
+main h1 {
+    font-family: "Bebas Neue", sans-serif;
+}
+
+footer {
+    background-color: black;
+}
+
+.pequeno {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1.2em;
+}
+
+.medio {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 2.1em;
+}
+
+.grande {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 3.7em;
+}

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-br" id="html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+        .bebas {
+        font-family: "Bebas Neue", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        }
+        .lobster {
+        font-family: "Lobster", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        }
+    </style>
+</head>
+<body onload="function criarId() {
+    if (localStorage.getItem('id') == null) {
+        localStorage.setItem('id', '0')
+    }
+}; criarId()">
+    <!-- Header -->
+    <header class="text-center text-uppercase">
+        <h1 style="font-size: 3em; padding: 48px; font-family: 'Lobster', sans-serif;">Tasky</h1>
+        <p>Gerencie suas tarefas de maneira inteligente</p>
+        <nav class="row g-0">
+            <a href="#offcanva" class="col-2 col-md-1 p-2" data-bs-toggle="offcanvas" style="background: url(imagens/icone_hamburguer.png) no-repeat center; background-size: contain;"></a>
+            <a href="index.html" class="col p-2 ativo">Criar</a>
+            <a href="consultar.html" class="col p-2">Consultar</a>
+        </nav>
+
+        <!-- Offcanva -->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanva" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title">Opções rápidas</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <div class="my-5">
+                    <h5>Tamanho do texto</h5>
+                    <select id="tamanho-texto" class="form-select" onchange="mudarTamanhoTexto()">
+                        <option value="pequeno">Pequeno</option>
+                        <option value="medio">Médio</option>
+                        <option value="grande">Grande</option>
+                    </select>
+              </div>
+              <hr>
+              <div class="my-4">
+                    <h5>Modo</h5>
+                    <button class="btn" style="border: 1px solid black;" onclick="temaClaro()"><img src="imagens/light.png" width="30px"></button>
+                    <button class="btn" style="border: 1px solid black;" onclick="temaEscuro()"><img src="imagens/1664849-200.png" width="30px"></button>
+              </div>
+              <hr>
+              <div class="my-5">
+                    <h5>Gerenciar categorias</h5>
+                    <h5 class="mt-4">Adicionar</h5>
+                    <div class="d-flex">
+                        <input type="text" id="" class="form-control">
+                        <button class="btn btn-success"><img src="imagens/check-removebg-preview.png" width="15px"></button>
+                    </div>
+                    <h5 class="mt-4">Remover</h5>
+                    <div class="d-flex">
+                        <select id="" class="form-select">
+                            <option value="">Selecionar</option>
+                        </select>
+                        <button class="btn btn-danger"><img src="imagens/remove-removebg-preview.png" width="15px"></button>
+                    </div>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </header>
+
+    <main class="row g-0">
+        <!-- Div para criação da tarefa -->
+        <div class="p-5 col-md-8 d-flex flex-column align-items-center">
+            <div class="row">
+                <div class="col-12 d-flex flex-column align-items-center">
+                    <h1>Título</h1>
+                    <input type="text" class="form-control" id="titulo">
+                </div>
+                <div class="col-12 my-4 d-flex flex-column align-items-center">
+                    <h1>Descrição</h1>
+                    <textarea class="form-control" id="descricao"></textarea>
+                </div>
+                <div class="col-12 my-4 d-flex flex-column align-items-center">
+                    <h1 style="text-align: center;">Imagem (opcional)</h1>
+                    <input type="file" id="imagem" class="form-control">
+                </div>
+                <button class="mt-5 btn bebas" style="background-color: #8D71E3; color: white; text-transform: uppercase; font-size: 1.5em;" onclick="capturarDados()">Criar Tasky <img src="imagens/check-removebg-preview.png" width="20px"></button>
+            </div>
+        </div>
+
+        <!-- Div para personalização da tarefa -->
+        <div class="py-5 col-md d-flex flex-column align-items-center">
+            <h1>Personalização</h1>
+            <div class="d-flex justify-content-evenly align-items-baseline w-75 mt-4">
+                <h1 class="fs-3" id="cor-text">COR</h1>
+                <input type="color" name="" id="cor" class="form-control-color w-50" oninput="corDinamica()">
+            </div>
+            <div class="d-flex justify-content-evenly align-items-baseline w-75 mt-4">
+                <h1 class="fs-3">Categoria</h1>
+                <select id="" class="form-select w-50">
+                    <option value="">Selecione</option>
+                </select>
+            </div>
+            <div class="d-flex flex-column align-items-center w-75 mt-4">
+                <h1 class="fs-3" style="text-align: center;">Data de vencimento da Task</h1>
+                <input type="date" id="" class="form-control">
+            </div>
+            <div class="d-flex flex-column align-items-center w-75 mt-4">
+                <h1 class="fs-3">Prioridade</h1>
+                <div class="d-flex justify-content-evenly w-100">
+                    <div>
+                        <label for="baixa">Baixa</label>
+                        <input type="radio" name="radio" id="baixa" class="form-check-input">
+                    </div>
+                    <div>
+                        <label for="media">Média</label>
+                        <input type="radio" name="radio" id="media" class="form-check-input">
+                    </div>
+                    <div>
+                        <label for="alta">Alta</label>
+                        <input type="radio" name="radio" id="alta" class="form-check-input">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="d-flex justify-content-center">
+        <div class="me-5">
+            <div class="p-2 text-light lobster" style="font-size: 2em;"><a href="index.html" style="text-decoration: none; color: white;">Tasky</a></div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center" style="width: 150px;">
+            <a href="https://github.com/alyssonmths" target="_blank"><img src="imagens/github-removebg-preview.png" width="35px"></a>
+            <a href="https://instagram.com/alyssonmths" target="_blank"><img src="imagens/instagram-white-icon.webp" width="30px"></a>
+            <a href="https://www.linkedin.com/in/alyssonmths/" target="_blank"><img src="imagens/linkedin-icon-1024x1024-k39l5ziu.png" width="30px"></a>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+    <script>
+        function corDinamica() {
+        let cor = document.getElementById('cor').value
+        document.getElementById('cor-text').style.color = cor
+        }
+        function mudarTamanhoTexto() {
+            let tam = document.getElementById('tamanho-texto').value
+            switch (tam) {
+                case 'pequeno':
+                    var elementosH1 = document.querySelectorAll('h1')
+                    elementosH1.forEach(function (elemento) {
+                        elemento.className = 'pequeno'
+                    })
+                    break;
+                case 'medio':
+                    var elementosH1 = document.querySelectorAll('h1')
+                    elementosH1.forEach(function (elemento) {
+                        elemento.className = 'medio'
+                    })
+                    break;
+                case 'grande':
+                    var elementosH1 = document.querySelectorAll('h1')
+                    elementosH1.forEach(function (elemento) {
+                        elemento.className = 'grande'
+                    })
+                    break;
+            }
+        }
+        function temaEscuro() {
+            document.getElementById('html').setAttribute('data-bs-theme', 'dark')
+        }
+        function temaClaro() {
+            document.getElementById('html').setAttribute('data-bs-theme', 'light')
+        }
+    </script>
+</body>
+</html>
