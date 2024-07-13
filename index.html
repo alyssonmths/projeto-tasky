@@ -27,7 +27,7 @@
     }
 }; criarId()">
     <!-- Header -->
-    <header class="text-center text-uppercase">
+    <header class="text-center text-uppercase" id="header">
         <h1 style="font-size: 3em; padding: 48px; font-family: 'Lobster', sans-serif;">Tasky</h1>
         <p>Gerencie suas tarefas de maneira inteligente</p>
         <nav class="row g-0">
@@ -79,6 +79,24 @@
     </header>
 
     <main class="row g-0">
+        
+        <!-- Modal -->
+        <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h1 class="modal-title fs-3" id="titulo-modal" style="color: #8D71E3;"></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="conteudo-modal"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-bs-dismiss="modal" id="botao-modal" style="background-color: #8D71E3; color: white;"></button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+
         <!-- Div para criação da tarefa -->
         <div class="p-5 col-md-8 d-flex flex-column align-items-center">
             <div class="row">
@@ -135,6 +153,8 @@
         </div>
     </main>
 
+    <p>livia é fresca</p>
+
     <footer class="d-flex justify-content-center">
         <div class="me-5">
             <div class="p-2 text-light lobster" style="font-size: 2em;"><a href="index.html" style="text-decoration: none; color: white;">Tasky</a></div>
@@ -178,9 +198,11 @@
         }
         function temaEscuro() {
             document.getElementById('html').setAttribute('data-bs-theme', 'dark')
+            document.getElementById('header').classList.add('header')
         }
         function temaClaro() {
             document.getElementById('html').setAttribute('data-bs-theme', 'light')
+            document.getElementById('header').classList.remove('header')
         }
     </script>
 </body>

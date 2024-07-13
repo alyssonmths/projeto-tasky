@@ -11,6 +11,10 @@ header {
     font-size: 1.5em;
 }
 
+.header {
+    background-color: #111324;
+}
+
 header > p {
     background-color: #8D71E3;
     font-family: "Bebas Neue", sans-serif;

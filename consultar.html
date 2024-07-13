@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" id="html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +23,7 @@
 </head>
 <body>
     <!-- Header -->
-    <header class="text-center text-uppercase">
+    <header class="text-center text-uppercase" id="header">
         <h1 style="font-size: 3em; padding: 48px; font-family: 'Lobster', sans-serif;">Tasky</h1>
         <p>Gerencie suas tarefas de maneira inteligente</p>
         <nav class="row g-0">
@@ -50,8 +50,8 @@
               <hr>
               <div class="my-4">
                     <h5>Modo</h5>
-                    <button class="btn" style="border: 1px solid black;"><img src="imagens/light.png" width="30px"></button>
-                    <button class="btn" style="border: 1px solid black;"><img src="imagens/1664849-200.png" width="30px"></button>
+                    <button class="btn" style="border: 1px solid black;" onclick="temaClaro()"><img src="imagens/light.png" width="30px"></button>
+                    <button class="btn" style="border: 1px solid black;" onclick="temaEscuro()"><img src="imagens/1664849-200.png" width="30px"></button>
               </div>
               <hr>
               <div class="my-5">
@@ -140,6 +140,14 @@
                     })
                     break;
             }
+        }
+        function temaEscuro() {
+            document.getElementById('html').setAttribute('data-bs-theme', 'dark')
+            document.getElementById('header').classList.add('header')
+        }
+        function temaClaro() {
+            document.getElementById('html').setAttribute('data-bs-theme', 'light')
+            document.getElementById('header').classList.remove('header')
         }
     </script>
 </body>
