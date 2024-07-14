@@ -76,11 +76,47 @@ function adicionarCategoria(id_categoria) {
 }
 
 function lerCategorias(id_categoria) {
-    for (let index = 0; index < id_categoria; index++) {
-        let categoria = localStorage.getItem(`categoria_${index}`)
-        let select = document.getElementById('remover-categorias')
-        let option = document.createElement('option')
-        option.innerHTML = categoria
-        select.appendChild(option)
+    if (document.getElementById('remover-categorias')) {
+        for (let index = 0; index < id_categoria; index++) {
+            let categoria = localStorage.getItem(`categoria_${index}`)
+            let select = document.getElementById('remover-categorias')
+            let option = document.createElement('option')
+            option.value = `categoria_${index}`
+            option.id = `categoria_${index}`
+            option.innerHTML = categoria
+            select.appendChild(option)
+        }
     }
+    if (document.getElementById('selecionar-categorias')) {
+        for (let index = 0; index < id_categoria; index++) {
+            let categoria = localStorage.getItem(`categoria_${index}`)
+            let select = document.getElementById('selecionar-categorias')
+            let option = document.createElement('option')
+            option.value = `categoria_${index}`
+            option.id = `categoria_${index}`
+            option.innerHTML = categoria
+            select.appendChild(option)
+        }
+    }
+}
+
+function removerCategoria() {
+    var categoria = document.getElementById('remover-categorias').value
+    // remover do localStorage
+    localStorage.removeItem(categoria)
+    // remover do DOM
+    document.getElementById(categoria).remove()
+    // decrementar o contador de categorias em 1 unidade
+    var id_categoria = parseInt(localStorage.getItem('id_categoria'))-1
+    localStorage.setItem('id_categoria', `${id_categoria}`)
+
+    // ajustar as chaves do localStorage
+
+    for (let index = parseInt(categoria.replace('categoria_', ''))+1; index <= id_categoria; index++) {
+        let valor = localStorage.getItem(`categoria_${index}`)
+        localStorage.removeItem(`categoria_${index}`)
+        localStorage.setItem(`categoria_${index-1}`, `${valor}`)
+    }
+
+    window.location.reload()
 }

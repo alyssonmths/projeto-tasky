@@ -25,7 +25,7 @@
     temaEscuro()
 } else {
     temaClaro()
-}">
+}; lerCategorias(parseInt(localStorage.getItem('id_categoria')))">
     <!-- Header -->
     <header class="text-center text-uppercase" id="header">
         <h1 style="font-size: 3em; padding: 48px; font-family: 'Lobster', sans-serif;">Tasky</h1>
@@ -67,10 +67,10 @@
                     </div>
                     <h5 class="mt-4">Remover</h5>
                     <div class="d-flex">
-                        <select id="" class="form-select">
+                        <select id="remover-categorias" class="form-select">
                             <option value="">Selecionar</option>
                         </select>
-                        <button class="btn btn-danger"><img src="imagens/remove-removebg-preview.png" width="15px"></button>
+                        <button class="btn btn-danger" onclick="removerCategoria()"><img src="imagens/remove-removebg-preview.png" width="15px"></button>
                     </div>
                 </div>
                 <hr>
@@ -103,7 +103,7 @@
                 <option value="">Mais distante</option>
             </select>
             <h1 class="fs-3" style="margin-top: 8px;">Categoria</h1>
-            <select name="" id="" class="form-select w-75">
+            <select id="selecionar-categorias" class="form-select w-75">
                 <option value="">Selecione</option>
             </select>
         </div>
