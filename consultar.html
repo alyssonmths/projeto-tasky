@@ -21,7 +21,11 @@
         }
     </style>
 </head>
-<body>
+<body onload="if (sessionStorage.getItem('tema') == 'dark') {
+    temaEscuro()
+} else {
+    temaClaro()
+}">
     <!-- Header -->
     <header class="text-center text-uppercase" id="header">
         <h1 style="font-size: 3em; padding: 48px; font-family: 'Lobster', sans-serif;">Tasky</h1>
@@ -58,8 +62,8 @@
                     <h5>Gerenciar categorias</h5>
                     <h5 class="mt-4">Adicionar</h5>
                     <div class="d-flex">
-                        <input type="text" id="" class="form-control">
-                        <button class="btn btn-success"><img src="imagens/check-removebg-preview.png" width="15px"></button>
+                        <input type="text" id="adicionar-categoria" class="form-control">
+                        <button class="btn btn-success" onclick="adicionarCategoria(localStorage.getItem('id_categoria'))"><img src="imagens/check-removebg-preview.png" width="15px"></button>
                     </div>
                     <h5 class="mt-4">Remover</h5>
                     <div class="d-flex">
@@ -107,8 +111,9 @@
         <!-- Div para consultar tarefas -->
         <div class="col d-flex flex-column" style="border: 1px solid green;">
             <h1 style="text-align: center;">Consultar tarefa</h1>
-            <div style="border: 1px solid red;" class="h-100">
+            <div style="border: 1px solid red;" class="h-100 row">
                 <!-- Os cards de exibição vão ser criados dentro dessa div -->
+                 
             </div>
         </div>
 
@@ -144,10 +149,12 @@
         function temaEscuro() {
             document.getElementById('html').setAttribute('data-bs-theme', 'dark')
             document.getElementById('header').classList.add('header')
+            sessionStorage.setItem('tema', 'dark')
         }
         function temaClaro() {
             document.getElementById('html').setAttribute('data-bs-theme', 'light')
             document.getElementById('header').classList.remove('header')
+            sessionStorage.setItem('tema', 'light')
         }
     </script>
 </body>

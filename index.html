@@ -21,11 +21,11 @@
         }
     </style>
 </head>
-<body onload="function criarId() {
-    if (localStorage.getItem('id') == null) {
-        localStorage.setItem('id', '0')
-    }
-}; criarId()">
+<body onload="criarId(); criarKeyCategoria(); lerCategorias(parseInt(localStorage.getItem('id_categoria'))); if (sessionStorage.getItem('tema') == 'dark') {
+    temaEscuro()
+} else {
+    temaClaro()
+}">
     <!-- Header -->
     <header class="text-center text-uppercase" id="header">
         <h1 style="font-size: 3em; padding: 48px; font-family: 'Lobster', sans-serif;">Tasky</h1>
@@ -62,12 +62,12 @@
                     <h5>Gerenciar categorias</h5>
                     <h5 class="mt-4">Adicionar</h5>
                     <div class="d-flex">
-                        <input type="text" id="" class="form-control">
-                        <button class="btn btn-success"><img src="imagens/check-removebg-preview.png" width="15px"></button>
+                        <input type="text" id="adicionar-categoria" class="form-control">
+                        <button class="btn btn-success" onclick="adicionarCategoria(localStorage.getItem('id_categoria'))"><img src="imagens/check-removebg-preview.png" width="15px"></button>
                     </div>
                     <h5 class="mt-4">Remover</h5>
                     <div class="d-flex">
-                        <select id="" class="form-select">
+                        <select id="remover-categorias" class="form-select">
                             <option value="">Selecionar</option>
                         </select>
                         <button class="btn btn-danger"><img src="imagens/remove-removebg-preview.png" width="15px"></button>
@@ -153,8 +153,6 @@
         </div>
     </main>
 
-    <p>livia é fresca</p>
-
     <footer class="d-flex justify-content-center">
         <div class="me-5">
             <div class="p-2 text-light lobster" style="font-size: 2em;"><a href="index.html" style="text-decoration: none; color: white;">Tasky</a></div>
@@ -199,10 +197,22 @@
         function temaEscuro() {
             document.getElementById('html').setAttribute('data-bs-theme', 'dark')
             document.getElementById('header').classList.add('header')
+            sessionStorage.setItem('tema', 'dark')
         }
         function temaClaro() {
             document.getElementById('html').setAttribute('data-bs-theme', 'light')
             document.getElementById('header').classList.remove('header')
+            sessionStorage.setItem('tema', 'light')
+        }
+        function criarId() {
+            if (localStorage.getItem('id') == null) {
+                localStorage.setItem('id', '0')
+            }
+        }
+        function criarKeyCategoria() {
+            if (localStorage.getItem('id_categoria') == null) {
+                localStorage.setItem('id_categoria', 0)
+            }
         }
     </script>
 </body>
