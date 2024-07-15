@@ -21,11 +21,17 @@
         }
     </style>
 </head>
-<body onload="if (sessionStorage.getItem('tema') == 'dark') {
+<body onload="
+if (sessionStorage.getItem('tema') == 'dark') {
     temaEscuro()
 } else {
     temaClaro()
-}; lerCategorias(parseInt(localStorage.getItem('id_categoria')))">
+}; 
+lerCategorias(parseInt(localStorage.getItem('id_categoria'))); 
+mostrarTarefas();
+if (sessionStorage.getItem('tamanho_texto')) {
+    carregarTamanhoTexto(sessionStorage.getItem('tamanho_texto'))
+};">
     <!-- Header -->
     <header class="text-center text-uppercase" id="header">
         <h1 style="font-size: 3em; padding: 48px; font-family: 'Lobster', sans-serif;">Tasky</h1>
@@ -78,9 +84,9 @@
         </div>
     </header>
     
-    <main class="row mt-4">
+    <main class="row mt-4 justify-content-center">
         <!-- Div para aplicar os filtros -->
-        <div class="col-sm-4 col-md-3 col-lg-2 d-flex flex-column align-items-center mb-sm-0 mb-3" style="border: 1px solid red;">
+        <div class="col-sm-4 col-md-3 col-lg-2 d-flex flex-column align-items-center mb-4">
             <h1>Filtrar</h1>
             <h1 class="fs-3" style="margin-top: 8px;">Prioridade</h1>
             <div class="d-flex justify-content-evenly w-75">
@@ -109,11 +115,10 @@
         </div>
         
         <!-- Div para consultar tarefas -->
-        <div class="col d-flex flex-column" style="border: 1px solid green;">
+        <div class="col d-flex flex-column">
             <h1 style="text-align: center;">Consultar tarefa</h1>
-            <div style="border: 1px solid red;" class="h-100 row">
+            <div class="row" id="cards">
                 <!-- Os cards de exibição vão ser criados dentro dessa div -->
-                 
             </div>
         </div>
 
@@ -125,6 +130,29 @@
     <script>
         function mudarTamanhoTexto() {
             let tam = document.getElementById('tamanho-texto').value
+            sessionStorage.setItem('tamanho_texto', `${tam}`)
+            switch (tam) {
+                case 'pequeno':
+                    var elementosH1 = document.querySelectorAll('h1')
+                    elementosH1.forEach(function (elemento) {
+                        elemento.className = 'pequeno'
+                    })
+                    break;
+                case 'medio':
+                    var elementosH1 = document.querySelectorAll('h1')
+                    elementosH1.forEach(function (elemento) {
+                        elemento.className = 'medio'
+                    })
+                    break;
+                case 'grande':
+                    var elementosH1 = document.querySelectorAll('h1')
+                    elementosH1.forEach(function (elemento) {
+                        elemento.className = 'grande'
+                    })
+                    break;
+            }
+        }
+        function carregarTamanhoTexto(tam) {
             switch (tam) {
                 case 'pequeno':
                     var elementosH1 = document.querySelectorAll('h1')

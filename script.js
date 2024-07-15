@@ -1,8 +1,11 @@
 class Task {
-    constructor(titulo, descricao, imagem) {
+    constructor(titulo, descricao, imagem, cor, categoria, prioridade) {
         this.titulo = titulo
         this.descricao = descricao
         this.imagem = imagem
+        this.cor = cor
+        this.categoria = categoria
+        this.prioridade = prioridade
     }
 }
 
@@ -17,6 +20,10 @@ function gravar(tarefa) {
 function capturarDados() {
     let titulo = document.getElementById('titulo').value
     let descricao = document.getElementById('descricao').value
+    let cor = document.getElementById('cor').value
+    let categoria = document.getElementById('selecionar-categorias').value
+    categoria = localStorage.getItem(`${categoria}`)
+    let prioridade = document.getElementById('prioridade').value
 
     if (document.getElementById('imagem').value != '') {
         var imagem = document.getElementById('imagem').value
@@ -24,7 +31,7 @@ function capturarDados() {
     
     // criando um objeto a partir da classe Task, usando as variáveis declaradas acima
 
-    let tarefa = new Task(titulo, descricao, imagem)
+    let tarefa = new Task(titulo, descricao, imagem, cor, categoria, prioridade)
 
     // verificar se os campos não estão vazios e exibir modal interativo
     
@@ -119,4 +126,60 @@ function removerCategoria() {
     }
 
     window.location.reload()
+}
+
+function mostrarTarefas(id = parseInt(localStorage.getItem('id'))) {
+    for (let index = 0; index < id; index++) {
+        var obj = localStorage.getItem(`task_${index}`)
+        obj = JSON.parse(obj)
+        criarCard(obj)
+    }
+}
+
+function criarCard(obj) {
+    // atribui a Div já criada no HTML a uma variável divCard
+    var divCard = document.getElementById('cards')
+    // cria o card inicial
+    var card = document.createElement('div')
+    // adiciona algumas classes ao card (ainda vazio)
+    card.classList.add('card')
+    card.classList.add('col-md-4')
+    card.classList.add('col-lg-3')
+    card.classList.add('mb-3')
+    // caso tenha alguma imagem, adiciona a imagem ao card
+    if (obj.imagem) {
+        var img = document.createElement('img')
+        img.src = `${obj.imagem}`
+        img.classList.add('card-img-top')
+        card.appendChild(img)
+    }
+    // cria o body do card
+    var cardBody = document.createElement('div')
+    cardBody.classList.add('card-body')
+    card.appendChild(cardBody)
+    // configurações do título do card
+    var titulo = document.createElement('h1')
+    titulo.classList.add('card-title')
+    titulo.classList.add('titulo-card')
+    titulo.innerHTML = `${obj.titulo}`
+    titulo.style.backgroundColor = `${obj.cor}`
+    if (obj.cor != '#ffffff') {
+        titulo.style.color = 'white'
+    }
+    cardBody.appendChild(titulo)
+    // configurações dos textos do body do card
+    var texto = document.createElement('p')
+    texto.classList.add('card-text')
+    texto.innerHTML = `${obj.descricao}`
+    cardBody.appendChild(texto)
+    // configurações da categoria do card
+    if (obj.categoria != null) {
+        var categoria = document.createElement('div')
+        categoria.style.backgroundColor = obj.cor
+        categoria.classList.add('titulo-card')
+        categoria.innerHTML = `Categoria: ${obj.categoria}`
+        cardBody.appendChild(categoria)
+    }
+
+    divCard.appendChild(card)
 }

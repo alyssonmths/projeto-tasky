@@ -60,3 +60,8 @@ footer {
     font-family: "Bebas Neue", sans-serif;
     font-size: 3.7em;
 }
+
+.titulo-card {
+    text-align: center;
+    border-radius: 5px;
+}
