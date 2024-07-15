@@ -65,3 +65,19 @@ footer {
     text-align: center;
     border-radius: 5px;
 }
+
+.botao-fechar {
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
+}
+
+.baixa {
+    background-color: #198754;
+}
+.media {
+    background-color: #ffc107;
+}
+.alta {
+    background-color: #dc3545;
+}

@@ -85,33 +85,39 @@ if (sessionStorage.getItem('tamanho_texto')) {
     </header>
     
     <main class="row mt-4 justify-content-center">
-        <!-- Div para aplicar os filtros -->
-        <div class="col-sm-4 col-md-3 col-lg-2 d-flex flex-column align-items-center mb-4">
-            <h1>Filtrar</h1>
-            <h1 class="fs-3" style="margin-top: 8px;">Prioridade</h1>
-            <div class="d-flex justify-content-evenly w-75">
-                <div class="d-flex flex-column align-items-center">
-                    <label for="baixa">Baixa</label>
-                    <input type="radio" name="radio" id="baixa" class="form-check-input">
+        <div class="col-sm-4 col-md-3 col-lg-2 d-flex flex-column align-items-center">
+            <!-- Div para aplicar os filtros -->
+            <div class="d-flex flex-column align-items-center mb-4 w-100"> 
+                <h1>Filtrar</h1>
+                <h1 class="fs-3" style="margin-top: 8px;">Prioridade</h1>
+                <div class="d-flex justify-content-evenly w-75">
+                    <div class="d-flex flex-column align-items-center">
+                        <label for="baixa">Baixa</label>
+                        <input type="radio" name="radio" id="baixa" class="form-check-input">
+                    </div>
+                    <div class="d-flex flex-column align-items-center">
+                        <label for="media">Média</label>
+                        <input type="radio" name="radio" id="media" class="form-check-input">
+                    </div>
+                    <div class="d-flex flex-column align-items-center">
+                        <label for="alta">Alta</label>
+                        <input type="radio" name="radio" id="alta" class="form-check-input">
+                    </div>
                 </div>
-                <div class="d-flex flex-column align-items-center">
-                    <label for="media">Média</label>
-                    <input type="radio" name="radio" id="media" class="form-check-input">
-                </div>
-                <div class="d-flex flex-column align-items-center">
-                    <label for="alta">Alta</label>
-                    <input type="radio" name="radio" id="alta" class="form-check-input">
-                </div>
+                <h1 class="fs-3" style="margin-top: 8px; text-align: center;">Data de vencimento</h1>
+                <select name="" id="" class="form-select w-75">
+                    <option value="">Mais próxima</option>
+                    <option value="">Mais distante</option>
+                </select>
+                <h1 class="fs-3" style="margin-top: 8px;">Categoria</h1>
+                <select id="selecionar-categorias" class="form-select w-75">
+                    <option value="">Selecione</option>
+                </select>
             </div>
-            <h1 class="fs-3" style="margin-top: 8px; text-align: center;">Data de vencimento</h1>
-            <select name="" id="" class="form-select w-75">
-                <option value="">Mais próxima</option>
-                <option value="">Mais distante</option>
-            </select>
-            <h1 class="fs-3" style="margin-top: 8px;">Categoria</h1>
-            <select id="selecionar-categorias" class="form-select w-75">
-                <option value="">Selecione</option>
-            </select>
+            <!-- Div para inserir os alertas -->
+            <div class="d-flex flex-column w-75 mb-3" id="divAlertas">
+                
+            </div>
         </div>
         
         <!-- Div para consultar tarefas -->

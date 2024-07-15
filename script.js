@@ -1,11 +1,13 @@
 class Task {
-    constructor(titulo, descricao, imagem, cor, categoria, prioridade) {
+    constructor(titulo, descricao, imagem, cor, categoria, prioridade, id, data) {
         this.titulo = titulo
         this.descricao = descricao
         this.imagem = imagem
         this.cor = cor
         this.categoria = categoria
         this.prioridade = prioridade
+        this.id = id
+        this.data = data
     }
 }
 
@@ -17,6 +19,8 @@ function gravar(tarefa) {
     localStorage.setItem('id', `${id}`)
 }
 
+let id_tarefa = 0
+
 function capturarDados() {
     let titulo = document.getElementById('titulo').value
     let descricao = document.getElementById('descricao').value
@@ -24,6 +28,9 @@ function capturarDados() {
     let categoria = document.getElementById('selecionar-categorias').value
     categoria = localStorage.getItem(`${categoria}`)
     let prioridade = document.getElementById('prioridade').value
+    let id = id_tarefa
+    id_tarefa += 1
+    let data = document.getElementById('data').value
 
     if (document.getElementById('imagem').value != '') {
         var imagem = document.getElementById('imagem').value
@@ -31,7 +38,7 @@ function capturarDados() {
     
     // criando um objeto a partir da classe Task, usando as variáveis declaradas acima
 
-    let tarefa = new Task(titulo, descricao, imagem, cor, categoria, prioridade)
+    let tarefa = new Task(titulo, descricao, imagem, cor, categoria, prioridade, id, data)
 
     // verificar se os campos não estão vazios e exibir modal interativo
     
@@ -146,6 +153,7 @@ function criarCard(obj) {
     card.classList.add('col-md-4')
     card.classList.add('col-lg-3')
     card.classList.add('mb-3')
+    card.id = obj.id
     // caso tenha alguma imagem, adiciona a imagem ao card
     if (obj.imagem) {
         var img = document.createElement('img')
@@ -167,11 +175,26 @@ function criarCard(obj) {
         titulo.style.color = 'white'
     }
     cardBody.appendChild(titulo)
+
+    // configurações do botão de fechar do card
+    var fechar = document.createElement('button')
+    fechar.classList.add('btn-close')
+    fechar.classList.add('botao-fechar')
+    fechar.setAttribute('onclick', `apagarCard(${obj.id})`)
+    card.appendChild(fechar)
     // configurações dos textos do body do card
     var texto = document.createElement('p')
     texto.classList.add('card-text')
     texto.innerHTML = `${obj.descricao}`
     cardBody.appendChild(texto)
+    // adicionar um badge com a prioridade dentro do parágrafo
+    if (obj.prioridade) {
+        var prioridadeBadge = document.createElement('span')
+        prioridadeBadge.classList.add('badge')
+        prioridadeBadge.classList.add(obj.prioridade)
+        prioridadeBadge.innerHTML = `Prioridade: ${obj.prioridade}`
+        cardBody.appendChild(prioridadeBadge)
+    }
     // configurações da categoria do card
     if (obj.categoria != null) {
         var categoria = document.createElement('div')
@@ -183,3 +206,60 @@ function criarCard(obj) {
 
     divCard.appendChild(card)
 }
+
+function apagarCard(id_card) {
+    let card = document.getElementById(id_card)
+    card.remove()
+    localStorage.removeItem(`task_${id_card}`)
+    // decrementar o contador de id em uma unidade
+    var id = parseInt(localStorage.getItem('id'))
+    localStorage.setItem('id', `${id-1}`)
+    // ajustar as chaves de localStorage
+    for (let index = parseInt(id_card+1); index <= id-1; index++) {
+        let obj = localStorage.getItem(`task_${index}`)
+        localStorage.removeItem(`task_${index}`)
+        localStorage.setItem(`task_${index-1}`, `${obj}`)
+    }
+}
+
+function diferencaDatas() {
+    let dataAtual = new Date()
+    let datas = []
+    for (let index = 0; index < parseInt(localStorage.getItem('id')); index++) {
+        let obj = localStorage.getItem(`task_${index}`)
+        obj = JSON.parse(obj).data
+        let dataVencimento = new Date(`${obj} `)
+        var diferencaDatas = Math.ceil((dataVencimento-dataAtual)/86400000)
+        datas.push(diferencaDatas)
+    }
+    return datas
+}
+
+function indicesAlert(array) {
+    let indices = []
+
+    for (let i = 0; i < array.length; i++) {
+        if (array[i] == 1) {
+            indices.push(i)
+        }
+    }
+    return indices
+}
+
+function gerarAlertaData() {
+    let indicesData = indicesAlert(diferencaDatas())
+    let divAlertas = document.getElementById('divAlertas')
+
+    indicesData.forEach(function (d) {
+        let obj = localStorage.getItem(`task_${d}`)
+        obj = JSON.parse(obj)
+        let alerta = document.createElement('div')
+        alerta.classList.add('alert')
+        alerta.innerHTML = `Sua tarefa "${obj.titulo}" vence amanhã!`
+        alerta.style.backgroundColor = obj.cor
+        alerta.style.textAlign = 'center'
+        divAlertas.appendChild(alerta)
+    })
+}
+
+gerarAlertaData()
