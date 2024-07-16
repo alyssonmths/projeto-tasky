@@ -165,10 +165,12 @@ if (sessionStorage.getItem('tema') == 'dark') {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="script.js"></script>
     <script>
+        // aplica a cor ao elemento COR da div personalização em tempo real
         function corDinamica() {
         let cor = document.getElementById('cor').value
         document.getElementById('cor-text').style.color = cor
         }
+        // função para mudar o tamanho dos textos
         function mudarTamanhoTexto() {
             let tam = document.getElementById('tamanho-texto').value
             sessionStorage.setItem(`tamanho_texto`, `${tam}`)
@@ -193,6 +195,7 @@ if (sessionStorage.getItem('tema') == 'dark') {
                     break;
             }
         }
+        // resgata o sessionStorage para aplicar o tamanho do texto aos elementos da página.
         function carregarTamanhoTexto(tam) {
             switch (tam) {
                 case 'pequeno':
@@ -215,6 +218,7 @@ if (sessionStorage.getItem('tema') == 'dark') {
                     break;
             }
         }
+        // tema escuro e tema claro
         function temaEscuro() {
             document.getElementById('html').setAttribute('data-bs-theme', 'dark')
             document.getElementById('header').classList.add('header')
@@ -225,11 +229,13 @@ if (sessionStorage.getItem('tema') == 'dark') {
             document.getElementById('header').classList.remove('header')
             sessionStorage.setItem('tema', 'light')
         }
+        // função que é executada junto ao onload do body. Cria um id caso ele não exista. Servirá para armazenar as tasks corretamente no localStorage.
         function criarId() {
             if (localStorage.getItem('id') == null) {
                 localStorage.setItem('id', '0')
             }
         }
+        // função que é executada junto ao onload do body. Cria um id de categoria caso ele não exista. Servirá para armazenar as categorias corretamente no localStorage.
         function criarKeyCategoria() {
             if (localStorage.getItem('id_categoria') == null) {
                 localStorage.setItem('id_categoria', 0)

@@ -134,6 +134,7 @@ if (sessionStorage.getItem('tamanho_texto')) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="script.js"></script>
     <script>
+        // função para mudar o tamanho dos textos
         function mudarTamanhoTexto() {
             let tam = document.getElementById('tamanho-texto').value
             sessionStorage.setItem('tamanho_texto', `${tam}`)
@@ -158,6 +159,7 @@ if (sessionStorage.getItem('tamanho_texto')) {
                     break;
             }
         }
+        // resgata o sessionStorage para aplicar o tamanho do texto aos elementos da página.
         function carregarTamanhoTexto(tam) {
             switch (tam) {
                 case 'pequeno':
@@ -180,6 +182,7 @@ if (sessionStorage.getItem('tamanho_texto')) {
                     break;
             }
         }
+        // tema escuro e tema claro
         function temaEscuro() {
             document.getElementById('html').setAttribute('data-bs-theme', 'dark')
             document.getElementById('header').classList.add('header')

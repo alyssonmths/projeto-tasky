@@ -1,3 +1,4 @@
+// cria a classe modelo instanciar para as tarefas
 class Task {
     constructor(titulo, descricao, imagem, cor, categoria, prioridade, id, data) {
         this.titulo = titulo
@@ -44,7 +45,7 @@ function capturarDados() {
     
     if (titulo != '' && descricao != '') { // sucesso
         gravar(tarefa)
-        // criando modal
+        // criando modal de sucesso
         let modal = new bootstrap.Modal(document.getElementById('modal'))
         document.getElementById('titulo-modal').innerHTML = 'Sucesso'
         document.getElementById('conteudo-modal').innerHTML = 'A tarefa foi adicionada! Veja todas as suas tarefas em "Consultar"'
@@ -55,7 +56,7 @@ function capturarDados() {
         document.getElementById('imagem').value = ''
     }
     else { // erro
-        // criando modal
+        // criando modal de erro
         let modal = new bootstrap.Modal(document.getElementById('modal'))
         document.getElementById('titulo-modal').innerHTML = 'Erro'
         document.getElementById('conteudo-modal').innerHTML = 'A tarefa não foi adicionada pois existem campos obrigatórios vazios. Corrija-os e tente novamente.'
@@ -64,15 +65,17 @@ function capturarDados() {
     }
 }
 
+// adicionar categoria. A função recebe id_categoria como parâmetro. No html, o id_categoria passado é o localStorage "id_categoria" mais recente.
+
 function adicionarCategoria(id_categoria) {
     let id = parseInt(id_categoria)
     let categoria = document.getElementById('adicionar-categoria').value
-    if (categoria != '') {
+    if (categoria != '') { // verifica se o valor do campo não está vazio
         localStorage.setItem(`categoria_${id_categoria}`, `${categoria}`)
         id += 1
-        localStorage.setItem(`id_categoria`, `${id}`)
+        localStorage.setItem(`id_categoria`, `${id}`) //atualiza o id_categoria do localStorage
 
-        // criando modal
+        // criando modal de sucesso
         let modal = new bootstrap.Modal(document.getElementById('modal'))
         document.getElementById('titulo-modal').innerHTML = 'Sucesso'
         document.getElementById('conteudo-modal').innerHTML = 'Categoria criada com sucesso.'
@@ -81,6 +84,7 @@ function adicionarCategoria(id_categoria) {
         modal.show()
     }
     else {
+        // criando modal de erro
         let modal = new bootstrap.Modal(document.getElementById('modal'))
         document.getElementById('titulo-modal').innerHTML = 'Erro'
         document.getElementById('conteudo-modal').innerHTML = 'Campo vazio.'
@@ -88,6 +92,8 @@ function adicionarCategoria(id_categoria) {
         modal.show()
     }
 }
+
+//função para exibir as categorias nos selects #remover-categorias e #selecionar-categorias
 
 function lerCategorias(id_categoria) {
     if (document.getElementById('remover-categorias')) {
@@ -135,15 +141,17 @@ function removerCategoria() {
     window.location.reload()
 }
 
+// função para mostrar as tarefas criadas na página "consultar"
+
 function mostrarTarefas(id = parseInt(localStorage.getItem('id'))) {
-    for (let index = 0; index < id; index++) {
-        var obj = localStorage.getItem(`task_${index}`)
+    for (let index = 0; index < id; index++) { // passa um loop que percorre todas as tarefas de localStorage
+        var obj = localStorage.getItem(`task_${index}`) // atribui o localStorage a uma variável obj
         obj = JSON.parse(obj)
-        criarCard(obj)
+        criarCard(obj) // chama a função para criar um card do respectivo objeto
     }
 }
 
-function criarCard(obj) {
+function criarCard(obj) { // recebe como parâmetro um objeto
     // atribui a Div já criada no HTML a uma variável divCard
     var divCard = document.getElementById('cards')
     // cria o card inicial
@@ -157,14 +165,16 @@ function criarCard(obj) {
     // caso tenha alguma imagem, adiciona a imagem ao card
     if (obj.imagem) {
         var img = document.createElement('img')
-        img.src = `${obj.imagem}`
+        img.setAttribute ('src', `${obj.imagem}`)
         img.classList.add('card-img-top')
         card.appendChild(img)
     }
+    
     // cria o body do card
     var cardBody = document.createElement('div')
     cardBody.classList.add('card-body')
     card.appendChild(cardBody)
+    
     // configurações do título do card
     var titulo = document.createElement('h1')
     titulo.classList.add('card-title')
@@ -182,11 +192,13 @@ function criarCard(obj) {
     fechar.classList.add('botao-fechar')
     fechar.setAttribute('onclick', `apagarCard(${obj.id})`)
     card.appendChild(fechar)
+    
     // configurações dos textos do body do card
     var texto = document.createElement('p')
     texto.classList.add('card-text')
     texto.innerHTML = `${obj.descricao}`
     cardBody.appendChild(texto)
+    
     // adicionar um badge com a prioridade dentro do parágrafo
     if (obj.prioridade) {
         var prioridadeBadge = document.createElement('span')
@@ -195,6 +207,7 @@ function criarCard(obj) {
         prioridadeBadge.innerHTML = `Prioridade: ${obj.prioridade}`
         cardBody.appendChild(prioridadeBadge)
     }
+    
     // configurações da categoria do card
     if (obj.categoria != null) {
         var categoria = document.createElement('div')
@@ -222,7 +235,7 @@ function apagarCard(id_card) {
     }
 }
 
-function diferencaDatas() {
+function diferencaDatas() { // retorna um array com a diferença de datas atual e a definida na hora da criação da tarefa
     let dataAtual = new Date()
     let datas = []
     for (let index = 0; index < parseInt(localStorage.getItem('id')); index++) {
@@ -235,9 +248,10 @@ function diferencaDatas() {
     return datas
 }
 
+// recebe um array e retorna outro array com os índices de cada ocorrência do número 1 no array original. Útil para verificar quando a diferença de datas é de 1 dia, para exibir um alerta de data de vencimento próxima.
+
 function indicesAlert(array) {
     let indices = []
-
     for (let i = 0; i < array.length; i++) {
         if (array[i] == 1) {
             indices.push(i)
@@ -245,6 +259,8 @@ function indicesAlert(array) {
     }
     return indices
 }
+
+// gera um alerta para o usuário caso a task esteja próxima do vencimento
 
 function gerarAlertaData() {
     let indicesData = indicesAlert(diferencaDatas())
@@ -263,6 +279,8 @@ function gerarAlertaData() {
 }
 
 gerarAlertaData()
+
+// filtra os cards com prioridade baixa, média ou alta. AINDA NÃO FUNCIONANDO CORRETAMENTE!
 
 function filtrar(value) {
     let arrayObj = []
