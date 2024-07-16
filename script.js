@@ -263,3 +263,81 @@ function gerarAlertaData() {
 }
 
 gerarAlertaData()
+
+function filtrar(value) {
+    let arrayObj = []
+    switch (value) {
+        case 'baixa':
+            for (let i = 0; i < parseInt(localStorage.getItem('id')); i++) {
+                let obj = (localStorage.getItem(`task_${i}`))
+                obj = JSON.parse(obj)
+                if (obj.prioridade == 'baixa') {
+                    arrayObj.push(obj)
+                }
+                sessionStorage.setItem('array_filtragem', `${JSON.stringify(arrayObj)}`)
+            }
+            break;
+        case 'media':
+            for (let i = 0; i < parseInt(localStorage.getItem('id')); i++) {
+                let obj = (localStorage.getItem(`task_${i}`))
+                obj = JSON.parse(obj)
+                if (obj.prioridade == 'media') {
+                    arrayObj.push(obj)
+                }
+                sessionStorage.setItem('array_filtragem', `${JSON.stringify(arrayObj)}`)
+            }
+            break;
+        case 'alta':
+            for (let i = 0; i < parseInt(localStorage.getItem('id')); i++) {
+                let obj = (localStorage.getItem(`task_${i}`))
+                obj = JSON.parse(obj)
+                if (obj.prioridade == 'alta') {
+                    arrayObj.push(obj)
+                }
+                sessionStorage.setItem('array_filtragem', `${JSON.stringify(arrayObj)}`)
+            }
+            break;
+    }
+    for (let i = 0; i < parseInt(localStorage.getItem('id')); i++) {
+        let card = document.getElementById(`${i}`)
+        if (card != null) {
+            card.remove()
+        }
+    }
+    arrayObj.forEach(function (obj) {
+        criarCard(obj)
+    })
+}
+
+/*
+
+function filtrarCategoria() {
+    // let categoria = document.getElementById(`categoria_${id}`).innerHTML
+    // console.log(categoria);
+
+    let select = document.getElementById('selecionar-categorias')
+    select.addEventListener('change', function () {
+        let opcaoSelecionada = select.options[select.selectedIndex]
+        let idOption = opcaoSelecionada.id
+        idOption = idOption.textContent
+        console.log(idOption);
+    })
+
+    for (let i = 0; i < parseInt(localStorage.getItem('id')); i++) {
+        let card = document.getElementById(`${i}`)
+        if (card != null) {
+            card.remove()
+        }
+    }
+    // for (i = 0; i < parseInt(localStorage.getItem('id')); i++) {
+    //     let obj = JSON.parse(localStorage.getItem(`task_${i}`))
+    //     let categoriaObj = obj.categoria
+    //     if (categoriaObj != null) {
+    //         if (categoriaObj == categoria) {
+    //             criarCard(obj)
+    //         }
+    //     }
+    // }
+}
+
+*/
